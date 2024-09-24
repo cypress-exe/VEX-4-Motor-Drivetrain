@@ -14,9 +14,29 @@ void autonomous(void) {
 }
 
 void usercontrol(void) {
-  while (1) {
+  const float robotSpeed = 1;
+  const float driveSpeed = 1;
+  const float turnSpeed = 1;
 
-    wait(20, msec);
+  while (1) {
+    // Drivetrain code
+    float drive = Controller1.Axis3.position();
+    float turn = Controller1.Axis1.position();
+
+    drive *= driveSpeed * robotSpeed;
+    turn *= turnSpeed * robotSpeed;
+
+    LeftFrontDriveMotor.setVelocity(drive + turn, percent);
+    LeftRearDriveMotor.setVelocity(drive + turn, percent);
+    RightFrontDriveMotor.setVelocity(drive - turn, percent); 
+    RightRearDriveMotor.setVelocity(drive - turn, percent);
+
+    LeftFrontDriveMotor.spin(forward);
+    LeftRearDriveMotor.spin(forward);
+    RightFrontDriveMotor.spin(forward);
+    RightRearDriveMotor.spin(forward);
+
+    wait(2, msec);
   }
 }
 
